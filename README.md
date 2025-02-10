@@ -2,6 +2,8 @@ ICS 635 - Machine Learning, Spring 2025
 Assignment 1
 
 Description of files:
+```
+.
 ├── hw01_dt.py       - Ablation study of Decision Tree model
 ├── hw01_initial.py  - Model performance evaluation comparing KNN, DT, and RF models
 ├── hw01_knn.py      - Ablation study of KNN model
@@ -11,3 +13,4 @@ Description of files:
     ├── initial
     ├── knn_study
     └── rf_study
+```
