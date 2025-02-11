@@ -96,12 +96,10 @@ min_metrics = {
 depth_metrics_df = pd.DataFrame(depth_metrics, index=['Accuracy', 'Precision', 'Recall', 'F1 Score']).T
 print('Results for Random Forest model, varying max depth:')
 print(depth_metrics_df)
-depth_metrics_df.to_csv('rf_depth_metrics.csv')
 
 min_metrics_df = pd.DataFrame(min_metrics, index=['Accuracy', 'Precision', 'Recall', 'F1 Score']).T
 print('\nResults for Random Forest model, varying min sample split:')
 print(min_metrics_df)
-min_metrics_df.to_csv('rf_min_metrics.csv')
 
 # generate and display confusion matrices for each model
 def gen_cm(cm, title):
