@@ -13,11 +13,11 @@ import numpy as np
 # PRE-PROCESSING
 # load breast cancer data to be used
 breast_cancer = load_breast_cancer()
-X, y = breast_cancer.data, breast_cancer.target # features, target
+X, y = breast_cancer.data, breast_cancer.target # extract features, target from dataset
 
 # split dataset into 80% train, 20% test
-# set random seed to 0 for reproducibility
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+# set random seed to 0 for reproducibility, ensures each model trains and tests with the exact same sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.20)
 
 # scaling data for KNN
 scaler = StandardScaler()
@@ -25,10 +25,10 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # MODEL TRAINING
-# initialize models
+# initialize models, set random seed to 0 for reproducibility
 knn = KNeighborsClassifier(n_neighbors=5)
-dt = DecisionTreeClassifier()
-rf = RandomForestClassifier(n_estimators=100)
+dt = DecisionTreeClassifier(random_state=0)
+rf = RandomForestClassifier(n_estimators=100, random_state=0)
 
 # train models with training dataset
 knn.fit(X_train_scaled, y_train) # use scaled dataset for KNN
@@ -67,7 +67,7 @@ def gen_confusion_matrix(cm, title):
     plt.xlabel("Predicted")
     plt.ylabel("Actual")
     plt.title(title)
-    # plt.savefig(f'./matrix/confusion_matrix_{title}.png') # uncomment to download images
+    # plt.savefig(f'./matrix/initial/confusion_matrix_{title}.png') # uncomment to download images
     # plt.show()  # uncomment to display images
 
 gen_confusion_matrix(confusion_matrix(y_test, knn_pred), 'KNN')

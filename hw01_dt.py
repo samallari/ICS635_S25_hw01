@@ -13,20 +13,22 @@ breast_cancer = load_breast_cancer()
 X, y = breast_cancer.data, breast_cancer.target # features, target
 
 # split dataset into 80% train, 20% test
-# set random seed to 0 for reproducibility
+# set random seed to 0 for reproducibility, ensure each model trains and tests with the exact same sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.20)
 
 # MODEL TRAINING
-# initialize models, varying the value of max_depth
-dt_none = DecisionTreeClassifier()
-dt_1 = DecisionTreeClassifier(max_depth=1)
-dt_5 = DecisionTreeClassifier(max_depth=5)
-dt_10 = DecisionTreeClassifier(max_depth=10)
-dt_25 = DecisionTreeClassifier(max_depth=25)
+# initialize models, varying the value of max_depth, set random seed to 0 for reproducibility
+dt_none = DecisionTreeClassifier(random_state=0)
+dt_1 = DecisionTreeClassifier(max_depth=1, random_state=0)
+dt_3 = DecisionTreeClassifier(max_depth=3, random_state=0)
+dt_5 = DecisionTreeClassifier(max_depth=5, random_state=0)
+dt_10 = DecisionTreeClassifier(max_depth=10, random_state=0)
+dt_25 = DecisionTreeClassifier(max_depth=25, random_state=0)
 
 # train models with training dataset
 dt_none.fit(X_train, y_train)
 dt_1.fit(X_train, y_train)
+dt_3.fit(X_train, y_train)
 dt_5.fit(X_train, y_train)
 dt_10.fit(X_train, y_train)
 dt_25.fit(X_train, y_train)
@@ -34,6 +36,7 @@ dt_25.fit(X_train, y_train)
 # test models i.e. make predictions using features from testing dataset
 dt_pred_none = dt_none.predict(X_test)
 dt_pred_1 = dt_1.predict(X_test)
+dt_pred_3 = dt_3.predict(X_test)
 dt_pred_5 = dt_5.predict(X_test)
 dt_pred_10 = dt_10.predict(X_test)
 dt_pred_25 = dt_25.predict(X_test)
@@ -51,6 +54,7 @@ def calc_metrics(y_true, y_pred):
 metrics = {
     'Max Depth = None': calc_metrics(y_test, dt_pred_none),
     'Max Depth = 1': calc_metrics(y_test, dt_pred_1),
+    'Max Depth = 3': calc_metrics(y_test, dt_pred_3),
     'Max Depth = 5': calc_metrics(y_test, dt_pred_5),
     'Max Depth = 10': calc_metrics(y_test, dt_pred_10),
     'Max Depth = 25': calc_metrics(y_test, dt_pred_25)
@@ -72,6 +76,7 @@ def gen_confusion_matrix(cm, title):
 
 gen_confusion_matrix(confusion_matrix(y_test, dt_pred_none), 'Max Depth = None')
 gen_confusion_matrix(confusion_matrix(y_test, dt_pred_1), 'Max Depth = 1')
+gen_confusion_matrix(confusion_matrix(y_test, dt_pred_3), 'Max Depth = 3')
 gen_confusion_matrix(confusion_matrix(y_test, dt_pred_5), 'Max Depth = 5')
 gen_confusion_matrix(confusion_matrix(y_test, dt_pred_10), 'Max Depth = 10')
 gen_confusion_matrix(confusion_matrix(y_test, dt_pred_25), 'Max Depth = 25')
